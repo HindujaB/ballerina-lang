@@ -17,6 +17,13 @@
 
 function lessThan(any lhs, any rhs) returns boolean|error {
     boolean|error result;
+    string|error lhsType = trap getType(lhs);
+    string|error rhsType = trap getType(rhs);
+
+    if (lhsType is string && rhsType is string && lhsType != rhsType) {
+        return error("operator '<' not defined for '" + lhsType + "' and '" + rhsType + "'.");
+    }
+
     if (lhs is () && rhs is ()) {
         result = trap (lhs < rhs); // () < ()
     } else if (lhs is boolean && rhs is boolean) {
@@ -47,6 +54,12 @@ function lessThan(any lhs, any rhs) returns boolean|error {
 
 function lessThanOrEquals(any lhs, any rhs) returns boolean|error {
     boolean|error result;
+    string|error lhsType = trap getType(lhs);
+    string|error rhsType = trap getType(rhs);
+
+    if (lhsType is string && rhsType is string && lhsType != rhsType) {
+        return error("operator '<=' not defined for '" + lhsType + "' and '" + rhsType + "'.");
+    }
     if (lhs is () && rhs is ()) {
         result = trap (lhs <= rhs); // () <= ()
     } else if (lhs is boolean && rhs is boolean) {

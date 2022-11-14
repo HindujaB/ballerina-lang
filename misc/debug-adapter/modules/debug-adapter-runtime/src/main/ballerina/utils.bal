@@ -17,7 +17,9 @@
 
 function getType(any value) returns string|error {
     // Need to handle simple values separately, since `typeof` operation returns the singleton type for simple values.
-    if (value is int) {
+    if (value is ()) {
+        return "()";
+    } else if (value is int) {
         return "int";
     } else if (value is float) {
         return "float";
@@ -27,6 +29,8 @@ function getType(any value) returns string|error {
         return "byte";
     } else if (value is string) {
         return "string";
+    } else if (value is decimal) {
+        return "decimal";
     } else {
         var result = trap (typeof value);
         if (result is typedesc) {
